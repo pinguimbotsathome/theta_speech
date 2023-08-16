@@ -16,7 +16,7 @@ $ pip install -r requirements.txt
 
 We developed some nodes that will go help to make the speech-to-text (STT) and text-to-speech (TTS).
 
-The **hotword_node** is a ROS Topic that, when called, listens and waits for a keyword.We use the _pvporcupine_ Python library to make the recognize (it can be seen in _nodes/theta_speech/hotword_node.py_).
+The **hotword_node** is a ROS Topic that, when called, listens and waits for a keyword.
 
 The **stt_node** is a ROS Service that, when called, listens and returns a text.
 
