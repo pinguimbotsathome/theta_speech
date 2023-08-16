@@ -1,0 +1,6 @@
+playsound
+pygobject
+TTS
+sounddevice
+openai-whisper
+scipy
