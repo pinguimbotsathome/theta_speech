@@ -4,3 +4,4 @@ TTS
 sounddevice
 openai-whisper
 scipy
+transformers
