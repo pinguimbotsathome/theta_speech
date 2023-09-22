@@ -11,10 +11,9 @@ from std_msgs.msg import Empty
 def hotword():
     rospy.init_node('hotword_detect', anonymous=True)
     pub = rospy.Publisher('/hotword', Empty, queue_size=1)
-    #rate = rospy.Rate(1)
 
     #Access key
-    key = "/7tRhhsTIGC6F0L6x2sJ1L2Is8d4OVZnYOMVLm/YljgwgyPvfd10NA=="
+    key = "/7tRhhsTIGC6F0L6x2sJ1L2Is8d4OVZnYOMVLm/YljgwgyPvfd10NA== "
 
     #DIR
     PACK_DIR = rospkg.RosPack().get_path("theta_speech")
@@ -45,8 +44,15 @@ def hotword():
             recorder.stop()
             #rate.sleep()
 
+def call_hotword(self):
+    hotword()
+
+
 if __name__ == '__main__':
     try:
         hotword()
+        sub = rospy.Subscriber('/hotword_activate', Empty, call_hotword)
+        while not rospy.is_shutdown():
+            pass
     except rospy.ROSInterruptException:
         pass               
