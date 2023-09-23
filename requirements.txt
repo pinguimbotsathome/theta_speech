@@ -5,3 +5,5 @@ sounddevice
 openai-whisper
 scipy
 transformers
+pvporcupine
+pvrecorder
