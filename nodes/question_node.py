@@ -4,16 +4,17 @@ import os
 import rospy
 import rospkg
 from transformers import pipeline
+from theta_speech.srv import QuestionAnswer, QuestionAnswerResponse
 
 PACK_DIR = rospkg.RosPack().get_path("theta_speech")
 TEXT_DIR = os.path.join(PACK_DIR,"resources/context.txt")
 
-def answer(model, question, context):
-    rospy.init_node('question_answering_node', anonymous=True)
-
+def answer_question(model, question, context):
     qa_model = pipeline("question-answering", model=model)
+    rospy.logwarn("log3")
     a = qa_model(question = question, context = context)
-    print(a['answer'])
+    rospy.logwarn("log4")
+    return a['answer']
 
 # reads context file
 def archive():
@@ -24,15 +25,18 @@ def archive():
     except Exception as e:
         print("Not found.")
 
-def main(question):
+def question_answering(question):
     # fastest model
     model = "deepset/tinyroberta-squad2"
+
     context = archive()
-    answer(model, question, context)
+    answer = answer_question(model, question.question, context)
+
+    return QuestionAnswerResponse(answer = answer)
 
 if __name__ == "__main__":
-    try:
-        input_string = sys.argv[1]
-        main(input_string) 
-    except rospy.ROSInterruptException:
-        pass 
+    
+    rospy.init_node('question_answering', anonymous=True)
+    
+    s = rospy.Service("services/questionAnswering", QuestionAnswer, question_answering)
+    rospy.spin()
