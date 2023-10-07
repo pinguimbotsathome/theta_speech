@@ -11,9 +11,9 @@ TEXT_DIR = os.path.join(PACK_DIR,"resources/context.txt")
 
 def answer_question(model, question, context):
     qa_model = pipeline("question-answering", model=model)
-    rospy.logwarn("log3")
+    
     a = qa_model(question = question, context = context)
-    rospy.logwarn("log4")
+    
     return a['answer']
 
 # reads context file
